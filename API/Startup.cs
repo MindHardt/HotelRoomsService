@@ -1,8 +1,8 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
+using API.Middlewares;
 using Core.Data;
 using Core.Data.Repositories;
-using Core.Exceptions.Middleware;
 using Core.Handlers;
 using Core.Mappers;
 using Core.Services.DI;
