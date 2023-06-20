@@ -56,14 +56,14 @@ public class Startup
     public void Configure(IApplicationBuilder app)
     {
         MigrateDatabase(app.ApplicationServices);
-        
-        if (_env.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
 
-        app.UseHttpsRedirection();
+		//if (_env.IsDevelopment())
+		//{
+		app.UseSwagger();
+		app.UseSwaggerUI();
+		//}
+
+		app.UseHttpsRedirection();
 
         app.UseErrorHandling();
         
