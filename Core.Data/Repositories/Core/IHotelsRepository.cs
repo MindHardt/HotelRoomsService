@@ -13,13 +13,8 @@ public interface IHotelsRepository
     /// <summary>
     /// Searches for hotel with specified parameters.
     /// </summary>
-    /// <param name="id">The id of the hotel.</param>
+    /// <param name="lat"></param>
+    /// <param name="lon"></param>
     /// <returns>The found <see cref="Hotel"/> or <see langword="null"/> if none is found.</returns>
-    public Task<Hotel?> GetHotel(long id);
-    /// <summary>
-    /// Searches for hotel with specified parameters.
-    /// </summary>
-    /// <param name="address">The address of the hotel.</param>
-    /// <returns>The found <see cref="Hotel"/> or <see langword="null"/> if none is found.</returns>
-    public Task<Hotel?> GetHotel(string address);
-}
+    public Task<Hotel?> GetHotel(float lat, float lon);
+   }

@@ -18,17 +18,11 @@ public class HotelsEfCoreRepository:
             .ToArrayAsync();
     }
 
-    public async Task<Hotel?> GetHotel(long id)
+    public async Task<Hotel?> GetHotel(float lat, float lon)
     {
         return await Set
             .Include(h => h.Rooms)
-            .FirstOrDefaultAsync(h => h.Id == id);
+            .FirstOrDefaultAsync(h => h.Latitude == lat && h.Longitude == lon);
     }
-
-    public async Task<Hotel?> GetHotel(string address)
-    {
-        return await Set
-            .Include(h => h.Rooms)
-            .FirstOrDefaultAsync(h => EF.Functions.ILike(h.Address, address));
-    }
+    
 }

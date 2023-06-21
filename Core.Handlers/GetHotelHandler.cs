@@ -23,9 +23,7 @@ public class GetHotelHandler : IRequestHandler<GetHotelRequest, GetHotelResponse
 
     public async Task<GetHotelResponse> Handle(GetHotelRequest request, CancellationToken cancellationToken)
     {
-        var dbHotel = request.Id is null
-            ? await _hotelsService.GetByAddressAsync(request.Address!)
-            : await _hotelsService.GetByIdAsync(request.Id.Value);
+        var dbHotel = await _hotelsService.GetByCoordinates(request.HotelLatitude, request.HotelLongitude);
         
         NotFoundException.ThrowIfNull(dbHotel);
 
