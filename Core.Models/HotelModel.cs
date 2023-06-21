@@ -1,6 +1,4 @@
-﻿using Core.Entities;
-
-namespace Core.Models;
+﻿namespace Core.Models;
 
 public record HotelModel
 {

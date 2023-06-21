@@ -1,34 +1,28 @@
-﻿using System.Net;
-using Newtonsoft.Json;
+﻿using System.Net.Http.Json;
+using Core.Requests;
+using Core.Responses;
+using MediatR;
+using Microsoft.Extensions.Configuration;
 
 namespace Core.Handlers;
 
-public class PostOrderHandler
+public class PostOrderHandler : IRequestHandler<PostOrderRequest, PostOrderResponse>
 {
     private readonly HttpClient _httpClient;
+    private readonly string _cleaningServiceUrl;
 
-    public PostOrderHandler(HttpClient httpClient)
+    public PostOrderHandler(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("https"); // TODO вписать корректного голубя (url-url)
+        _cleaningServiceUrl = configuration.GetSection("Urls")["CleaningService"]!;
+
     }
-
-    public async Task<bool> RequestRoomCleaning(double latitude, double longitude, int roomNumber)
+    
+    //TODO Сделать сохранение что комната грязная в бд
+    public async Task<PostOrderResponse> Handle(PostOrderRequest request, CancellationToken cancellationToken)
     {
-        var request = new
-        {
-            hotel_coordinates = new
-            {
-                latitude,
-                longitude
-            },
-            room_number = roomNumber
-        };
 
-        var requestBody = JsonConvert.SerializeObject(request);
-        var content = new StringContent(requestBody, System.Text.Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PostAsync("endpoint", content); // TODO Нужно будет укзать нужный эндпоинт у сервиса клининга
-        return response.StatusCode == HttpStatusCode.OK;
+        await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, request, cancellationToken: cancellationToken);
+        return new PostOrderResponse();
     }
 }
