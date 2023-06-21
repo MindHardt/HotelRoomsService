@@ -8,4 +8,6 @@ public record Room
     public required Hotel Hotel { get; set; }
 
     public RoomCleanState State { get; set; } = RoomCleanState.Clean;
+    
+    public HotelCoordinates Coordinates { get; set; } 
 }
