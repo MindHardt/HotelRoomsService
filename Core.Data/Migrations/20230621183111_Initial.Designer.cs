@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230609083719_AddedSeededData")]
-    partial class AddedSeededData
+    [Migration("20230621183111_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,17 +32,16 @@ namespace Core.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                    b.Property<float>("Latitude")
+                        .HasColumnType("real");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                    b.Property<float>("Longitude")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Latitude", "Longitude")
+                        .IsUnique();
 
                     b.ToTable("Hotel");
 
@@ -50,20 +49,20 @@ namespace Core.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            Address = "Улица Труда, 179, Челябинск, 454080",
-                            Name = "RadissonBlu"
+                            Latitude = 55.167137f,
+                            Longitude = 61.379574f
                         },
                         new
                         {
                             Id = 2L,
-                            Address = "Улица Труда, 153, Челябинск, 454091",
-                            Name = "Малахит"
+                            Latitude = 55.16725f,
+                            Longitude = 61.395924f
                         },
                         new
                         {
                             Id = 3L,
-                            Address = "Проспект Ленина, 26А, Челябинск, 454007",
-                            Name = "Гранд отель Видгоф"
+                            Latitude = 55.161903f,
+                            Longitude = 61.43048f
                         });
                 });
 
@@ -75,13 +74,25 @@ namespace Core.Data.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Floor")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("HotelId", "Number");
-
-                    b.HasIndex("State");
 
                     b.ToTable("Room");
 
@@ -90,78 +101,130 @@ namespace Core.Data.Migrations
                         {
                             HotelId = 1L,
                             Number = 1,
+                            Class = "Luxe",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=1229780929",
+                            Price = 9999m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 1L,
                             Number = 2,
+                            Class = "Default",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=923646772",
+                            Price = 301m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 1L,
                             Number = 3,
+                            Class = "VIP",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=1356708602",
+                            Price = 1m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 2L,
                             Number = 100,
+                            Class = "Default",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=308339214",
+                            Price = 301m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 2L,
                             Number = 101,
+                            Class = "Luxe",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=943028256",
+                            Price = 100m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 2L,
                             Number = 200,
+                            Class = "Default",
+                            Floor = 2,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=1640880358",
+                            Price = 301m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 2L,
                             Number = 201,
+                            Class = "Default",
+                            Floor = 2,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=812584830",
+                            Price = 301m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 3L,
                             Number = 10,
+                            Class = "Luxe",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=446532168",
+                            Price = 1111m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 3L,
                             Number = 11,
+                            Class = "Default",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=1550699072",
+                            Price = 301m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 3L,
                             Number = 12,
+                            Class = "Default",
+                            Floor = 1,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=1826706350",
+                            Price = 301m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 3L,
                             Number = 20,
+                            Class = "VIP",
+                            Floor = 2,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=511833658",
+                            Price = 675656m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 3L,
                             Number = 21,
+                            Class = "VIP",
+                            Floor = 2,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=804161671",
+                            Price = 19222m,
                             State = "Clean"
                         },
                         new
                         {
                             HotelId = 3L,
                             Number = 22,
+                            Class = "Luxe",
+                            Floor = 2,
+                            ImageUrl = "https://loremflickr.com/320/240?lock=2005243139",
+                            Price = 1m,
                             State = "Clean"
                         });
                 });

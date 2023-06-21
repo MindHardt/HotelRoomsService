@@ -1,9 +1,12 @@
 ﻿using Core.Entities;
+using Core.Responses;
+using MediatR;
 
 namespace Core.Requests;
 
-public class PostOrderRequest
+public class PostOrderRequest : IRequest<PostOrderResponse>
 {
-    public HotelCoordinates HotelCoordinates { get; set; }
-    public int RoomNumber { get; set; }
+    public required float HotelLatitude { get; set; } 
+    public required float HotelLongitude { get; set; } 
+    public required int RoomNumber { get; set; }
 }

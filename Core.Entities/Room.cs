@@ -1,4 +1,6 @@
-﻿namespace Core.Entities;
+﻿using System.Buffers.Text;
+
+namespace Core.Entities;
 
 public record Room
 {
@@ -9,4 +11,11 @@ public record Room
 
     public RoomCleanState State { get; set; } = RoomCleanState.Clean;
     
+    public required RoomClass Class { get; set; }
+    
+    public required decimal Price { get; set; }
+    
+    public required string ImageUrl { get; set; } 
+    public required int Floor { get; set; }
+
 }

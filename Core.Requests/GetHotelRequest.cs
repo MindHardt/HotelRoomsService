@@ -1,10 +1,11 @@
-﻿using Core.Responses;
+﻿using Core.Entities;
+using Core.Responses;
 using MediatR;
 
 namespace Core.Requests;
 
 public record GetHotelRequest : IRequest<GetHotelResponse>
 {
-    public long? Id { get; set; }
-    public string? Address { get; set; }
+    public required float HotelLatitude { get; set; } 
+    public required float HotelLongitude { get; set; } 
 }

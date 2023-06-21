@@ -6,8 +6,6 @@ using Core.Data.Repositories;
 using Core.Handlers;
 using Core.Mappers;
 using Core.Services.DI;
-using Core.Validators;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace API;
@@ -40,7 +38,6 @@ public class Startup
         {
             options.AddMaps(typeof(HotelsMapper));
         });
-        services.AddValidatorsFromAssemblyContaining<GetHotelRequestValidator>();
         services.AddErrorHandling();
 
         services.AddControllers()
