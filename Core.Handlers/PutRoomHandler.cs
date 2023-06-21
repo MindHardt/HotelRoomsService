@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Entities;
 using Core.Exceptions;
 using Core.Models;
 using Core.Requests;
@@ -10,27 +11,25 @@ namespace Core.Handlers;
 
 public class PutRoomHandler : IRequestHandler<PutRoomRequest, PutRoomResponse>
 {
-	private readonly IRoomService _roomsService;
-	private readonly IMapper _mapper;
+    private readonly IRoomsService _roomsService;
+    private readonly IMapper _mapper;
 
-	public PutRoomHandler(
-		IRoomService roomsService,
-		IMapper mapper)
-	{
-		_roomsService = roomsService;
-		_mapper = mapper;
-	}
+    public PutRoomHandler(IRoomsService roomsService, IMapper mapper)
+    {
+        _roomsService = roomsService;
+        _mapper = mapper;
+    }
 
-	public async Task<PutRoomResponse> Handle(PutRoomRequest request, CancellationToken cancellationToken)
-	{
-		var dbRoom = _roomsService.PutByStateAsync(request.State.Value);
+    public async Task<PutRoomResponse> Handle(PutRoomRequest request, CancellationToken cancellationToken)
+    {
+        var updatedRoom = await _roomsService.UpdateRoom(_mapper.Map<Room>(request.Room));
 
-		NotFoundException.ThrowIfNull(dbRoom);
+        NotFoundException.ThrowIfNull(updatedRoom);
 
-		var response = new PutRoomResponse
-		{
-			Room = _mapper.Map<RoomModel>(dbRoom)
-		};
-		return response;
-	}
+        //todo: отправить ченить клинингу
+
+        var response = new PutRoomResponse();
+
+        return response;
+    }
 }

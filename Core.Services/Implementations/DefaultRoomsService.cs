@@ -6,17 +6,27 @@ using Core.Services.DI;
 namespace Core.Services.Implementations;
 
 [DefaultService]
-public class DefaultRoomsService : IRoomService
+public class DefaultRoomsService : IRoomsService
 {
-	private readonly IRoomsRepository _roomsRepository;
+    private readonly IRoomsRepository _roomsRepository;
 
-	public DefaultRoomsService(IRoomsRepository roomsRepository)
-	{
-		_roomsRepository = roomsRepository;
-	}
+    public DefaultRoomsService(IRoomsRepository roomsRepository)
+    {
+        _roomsRepository = roomsRepository;
+    }
 
-	public async Task<Room?> PutByStateAsync(RoomCleanState state)
-	{
-		return await _roomsRepository.PutRoom(state);
-	}
+    public Task<IReadOnlyCollection<Room>> GetAllRoomsAsync(float hotelLatitude, float hotelLongitude)
+    {
+        return _roomsRepository.GetAllRooms(hotelLatitude, hotelLongitude);
+    }
+
+    public async Task<Room?> GetByCoordinates(float hotelLatitude, float hotelLongitude, int number)
+    {
+        return await _roomsRepository.GetRoom(hotelLatitude, hotelLongitude, number);
+    }
+
+    public async Task<Room?> UpdateRoom(Room room)
+    {
+        return await _roomsRepository.UpdateRoom(room);
+    }
 }

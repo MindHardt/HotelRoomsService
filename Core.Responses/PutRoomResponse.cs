@@ -1,8 +1,6 @@
-﻿using Core.Models;
+﻿namespace Core.Responses;
 
-namespace Core.Responses;
-
-public record PutRoomResponse
+public class PutRoomResponse
 {
-	public required RoomModel Room { get; set; }
+    // возврат внешнему серверу ответа об обновлении комнаты
 }
