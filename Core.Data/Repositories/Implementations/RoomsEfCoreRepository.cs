@@ -42,10 +42,15 @@ public class RoomsEfCoreRepository :
             if (dbRoom is null)
                 return null;
 
-            var updatedRoom = Set.Update(room);
+            dbRoom.State = room.State;
+            dbRoom.Price = room.Price;
+            dbRoom.Class = room.Class;
+            dbRoom.Floor = room.Floor;
+            dbRoom.ImageUrl = room.ImageUrl;
+
             _ctx.SaveChanges();
 
-            return updatedRoom.Entity;
+            return dbRoom;
         });
     }
 }
