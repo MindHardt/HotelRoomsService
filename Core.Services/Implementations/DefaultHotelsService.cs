@@ -24,5 +24,15 @@ public class DefaultHotelsService : IHotelsService
     {
         return await _hotelsRepository.GetHotel(latitude, longitude);
     }
-
+    
+    public Task<decimal?> GetMinRoomPriceAsync(float latitude, float longitude)
+    {
+        return _hotelsRepository.GetMinRoomPrices(latitude, longitude);
+    }
+    
+    public Task<decimal?> GetMaxRoomPriceAsync(float latitude, float longitude)
+    {
+        return _hotelsRepository.GetMaxRoomPrices(latitude, longitude);
+    }
+    
 }

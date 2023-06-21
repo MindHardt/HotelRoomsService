@@ -24,5 +24,18 @@ public class HotelsEfCoreRepository:
             .Include(h => h.Rooms)
             .FirstOrDefaultAsync(h => h.Latitude == lat && h.Longitude == lon);
     }
-    
+
+    public async Task<decimal?> GetMinRoomPrices(float lat, float lon)
+    {
+        return await Set.Where(h => h.Latitude == lat && h.Longitude == lon)
+            .Select(h => h.Rooms.Min(r => r.Price))
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<decimal?> GetMaxRoomPrices(float lat, float lon)
+    {
+        return await Set.Where(h => h.Latitude == lat && h.Longitude == lon)
+            .Select(h => h.Rooms.Max(r => r.Price))
+            .FirstOrDefaultAsync();
+    }
 }

@@ -22,6 +22,10 @@ public class HotelsController : ControllerBase
     public Task<GetAllHotelsResponse> GetAllHotels([FromQuery] GetAllHotelsRequest request)
         => _mediator.Send(request);
     
+    [HttpGet("roomsprice")]
+    public Task<GetRoomPricesResponse> GetAllHotels([FromQuery] GetRoomPricesRequest request)
+        => _mediator.Send(request);
+    
     [HttpGet]
     public Task<GetHotelResponse> GetHotel([FromQuery] GetHotelRequest request)
         => _mediator.Send(request);

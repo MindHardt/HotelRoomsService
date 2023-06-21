@@ -17,4 +17,22 @@ public interface IHotelsRepository
     /// <param name="lon"></param>
     /// <returns>The found <see cref="Hotel"/> or <see langword="null"/> if none is found.</returns>
     public Task<Hotel?> GetHotel(float lat, float lon);
-   }
+
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lat"></param>
+    /// <param name="lon"></param>
+    /// <returns></returns>
+    public Task<decimal?> GetMinRoomPrices(float lat, float lon);
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lat"></param>
+    /// <param name="lon"></param>
+    /// <returns></returns>
+    public Task<decimal?> GetMaxRoomPrices(float lat, float lon);
+
+}
