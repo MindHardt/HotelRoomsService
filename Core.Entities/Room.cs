@@ -9,5 +9,4 @@ public record Room
 
     public RoomCleanState State { get; set; } = RoomCleanState.Clean;
     
-    public HotelCoordinates Coordinates { get; set; } 
 }
