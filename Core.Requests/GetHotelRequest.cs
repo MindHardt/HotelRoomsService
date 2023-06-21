@@ -1,5 +1,4 @@
-﻿using Core.Entities;
-using Core.Responses;
+﻿using Core.Responses;
 using MediatR;
 
 namespace Core.Requests;

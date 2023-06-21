@@ -1,6 +1,4 @@
-﻿using System.Buffers.Text;
-
-namespace Core.Entities;
+﻿namespace Core.Entities;
 
 public record Room
 {
