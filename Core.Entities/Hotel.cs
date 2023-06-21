@@ -13,6 +13,6 @@ public record Hotel
     public required string Address { get; set; }
 
     public ICollection<Room> Rooms { get; set; } = new List<Room>();
-    
-    public HotelCoordinates Coordinates { get; set; } 
+
+    public HotelCoordinates Coordinates { get; set; } = new (0, 0);
 }

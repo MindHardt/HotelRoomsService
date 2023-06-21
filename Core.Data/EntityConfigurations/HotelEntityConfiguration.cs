@@ -20,18 +20,21 @@ public class HotelEntityConfiguration : IEntityTypeConfiguration<Hotel>
             Id = 1,
             Name = "RadissonBlu",
             Address = "Улица Труда, 179, Челябинск, 454080",
+            Coordinates = new HotelCoordinates(55.167138, 61.379575)
         };
         var malachite = new Hotel
         {
             Id = 2,
             Name = "Малахит",
-            Address = "Улица Труда, 153, Челябинск, 454091"
+            Address = "Улица Труда, 153, Челябинск, 454091",
+            Coordinates = new HotelCoordinates(55.167251, 61.395924)
         };
         var vidgof = new Hotel
         {
             Id = 3,
             Name = "Гранд отель Видгоф",
-            Address = "Проспект Ленина, 26А, Челябинск, 454007"
+            Address = "Проспект Ленина, 26А, Челябинск, 454007",
+            Coordinates = new HotelCoordinates(55.161913, 61.431345)
         };
 
         builder.HasData(radisson, malachite, vidgof);
