@@ -8,57 +8,44 @@ using System.Collections.Generic;
 namespace Core.Data.Repositories.Implementations;
 
 public class RoomsEfCoreRepository :
-    EfCoreRepositoryBase<Hotel>,
+    EfCoreRepositoryBase<Room>,
     IRoomsRepository
 {
-    private readonly IMapper _mapper;
     private readonly DbContext _ctx;
 
-    public RoomsEfCoreRepository(DbContext ctx, IMapper mapper) : base(ctx)
+    public RoomsEfCoreRepository(DbContext ctx) : base(ctx)
     {
-        _mapper = mapper;
         _ctx = ctx;
     }
 
     public async Task<IReadOnlyCollection<Room>> GetAllRooms(float lat, float lon)
     {
-        return await Task.Run(() => Set
-            .Include(h => h.Rooms)
-            .First(h => h.Latitude == lat && h.Longitude == lon)
-            .Rooms
-            .OrderBy(r => r.Number)
-            .ToArray());
+        return await Set
+            .Include(r => r.Hotel)
+            .Where(r => r.Hotel.Latitude == lat && r.Hotel.Longitude == lon)
+            .ToArrayAsync();
     }
 
     public async Task<Room?> GetRoom(float lat, float lon, int number)
     {
-        return await Task.Run(() => Set
-            .Include(h => h.Rooms)
-            .FirstOrDefault(h => h.Latitude == lat && h.Longitude == lon)
-            ?.Rooms
-            .FirstOrDefault(r => r.Number == number));
+        return await Set
+            .Include(r => r.Hotel)
+            .Where(r => r.Hotel.Latitude == lat && r.Hotel.Longitude == lon)
+            .FirstOrDefaultAsync(r => r.Number == number);
     }
 
     public async Task<Room?> UpdateRoom(Room room)
     {
         return await Task.Run(() => {
-            var dbHotel = Set
-            .Include(h => h.Rooms)
-            .FirstOrDefault(h => h.Rooms.Any(r => r.Number == room.Number));
-
-            if (dbHotel is null)
-                return null;
-
-            var dbRoom = dbHotel.Rooms.FirstOrDefault(r => r.Number == room.Number);
+            var dbRoom = Set.Find(room.Number);
 
             if (dbRoom is null)
                 return null;
 
-            var mappedRoom = _mapper.Map(room, dbRoom);
-
+            var updatedRoom = Set.Update(room);
             _ctx.SaveChanges();
 
-            return mappedRoom;
+            return updatedRoom.Entity;
         });
     }
 }

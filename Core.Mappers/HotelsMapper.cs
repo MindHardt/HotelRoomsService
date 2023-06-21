@@ -9,6 +9,7 @@ public class HotelsMapper : Profile
     public HotelsMapper()
     {
         CreateMap<Room, RoomModel>();
+        CreateMap<RoomModel, Room>();
         CreateMap<Hotel, HotelModel>();
     }
 }
