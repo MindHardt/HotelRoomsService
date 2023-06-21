@@ -1,9 +1,10 @@
-﻿namespace Core.Models;
+﻿using Core.Entities;
+
+namespace Core.Models;
 
 public record HotelModel
 {
-    public required long Id { get; set; }
-    public required string Name { get; set; }
-    public required string Address { get; set; }
+    public required float Latitude { get; set; }
+    public required float Longitude { get; set; }
     public required RoomModel[] Rooms { get; set; }
 }

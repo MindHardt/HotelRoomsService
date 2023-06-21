@@ -13,25 +13,28 @@ public class HotelEntityConfiguration : IEntityTypeConfiguration<Hotel>
             .WithOne(x => x.Hotel)
             .HasForeignKey(x => x.HotelId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasIndex(x => new { x.Latitude, x.Longitude})
+            .IsUnique();
         
         // Данные по умолчанию для тестов
         var radisson = new Hotel
         {
             Id = 1,
-            Name = "RadissonBlu",
-            Address = "Улица Труда, 179, Челябинск, 454080",
+            Latitude = 55.167138f,
+            Longitude = 61.379575f,
         };
         var malachite = new Hotel
         {
             Id = 2,
-            Name = "Малахит",
-            Address = "Улица Труда, 153, Челябинск, 454091"
+            Latitude = 55.167251f,
+            Longitude = 61.395924f
         };
         var vidgof = new Hotel
         {
             Id = 3,
-            Name = "Гранд отель Видгоф",
-            Address = "Проспект Ленина, 26А, Челябинск, 454007"
+            Latitude = 55.161903f,
+            Longitude = 61.430482f
         };
 
         builder.HasData(radisson, malachite, vidgof);

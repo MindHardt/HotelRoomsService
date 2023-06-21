@@ -20,13 +20,9 @@ public class DefaultHotelsService : IHotelsService
         return _hotelsRepository.GetAllHotels();
     }
 
-    public async Task<Hotel?> GetByIdAsync(long id)
+    public async Task<Hotel?> GetByCoordinates(float latitude, float longitude)
     {
-        return await _hotelsRepository.GetHotel(id);
+        return await _hotelsRepository.GetHotel(latitude, longitude);
     }
 
-    public async Task<Hotel?> GetByAddressAsync(string address)
-    {
-        return await _hotelsRepository.GetHotel(address);
-    }
 }
