@@ -24,5 +24,4 @@ public class HotelsEfCoreRepository:
             .Include(h => h.Rooms)
             .FirstOrDefaultAsync(h => h.Latitude == lat && h.Longitude == lon);
     }
-    
 }

@@ -6,5 +6,4 @@ public interface IHotelsService
 {
     public Task<IReadOnlyCollection<Hotel>> GetAllHotelsAsync();
     public Task<Hotel?> GetByCoordinates(float latitude, float longitude);
-
 }
