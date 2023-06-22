@@ -30,7 +30,7 @@ public class HotelsController : ControllerBase
     public Task<PutRoomResponse> UpdateRoom([FromBody] PutRoomRequest request)
     => _mediator.Send(request);
     
-    [HttpPost]
-    public Task<PostOrderResponse> MakeRoomClear([FromBody] PostOrderRequest request)
+    [HttpPut("room/clean")]
+    public Task<PutOrderResponse> MakeRoomClear([FromBody] PutOrderRequest request)
         => _mediator.Send(request);
 }
