@@ -8,7 +8,7 @@ public interface IHotelsRepository
     /// Gets all the hotels without their rooms for overview.
     /// </summary>
     /// <returns></returns>
-    public Task<IReadOnlyCollection<Hotel>> GetAllHotels();
+    public Task<IReadOnlyCollection<HotelData>> GetAllHotels();
 
     /// <summary>
     /// Searches for hotel with specified parameters.
@@ -16,5 +16,5 @@ public interface IHotelsRepository
     /// <param name="lat"></param>
     /// <param name="lon"></param>
     /// <returns>The found <see cref="Hotel"/> or <see langword="null"/> if none is found.</returns>
-    public Task<Hotel?> GetHotel(float lat, float lon);
+    public Task<HotelData?> GetHotel(float lat, float lon);
    }

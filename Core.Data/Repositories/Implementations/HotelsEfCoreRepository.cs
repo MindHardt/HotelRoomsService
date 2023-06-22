@@ -11,18 +11,34 @@ public class HotelsEfCoreRepository:
     public HotelsEfCoreRepository(DbContext ctx) : base(ctx)
     { }
 
-    public async Task<IReadOnlyCollection<Hotel>> GetAllHotels()
+    public async Task<IReadOnlyCollection<HotelData>> GetAllHotels()
     {
         return await Set
             .OrderBy(h => h.Id)
+            .Select(h => new HotelData
+            {
+                Longitude = h.Longitude,
+                Latitude = h.Latitude,
+                MaxPrice = h.Rooms.Max(r => r.Price),
+                MinPrice = h.Rooms.Min(r => r.Price),
+            })
             .ToArrayAsync();
     }
 
-    public async Task<Hotel?> GetHotel(float lat, float lon)
+    public async Task<HotelData?> GetHotel(float lat, float lon)
     {
         return await Set
             .Include(h => h.Rooms)
-            .FirstOrDefaultAsync(h => h.Latitude == lat && h.Longitude == lon);
+            .Where(h => h.Latitude == lat && h.Longitude == lon)
+            .Select(h => new HotelData
+            {
+                Longitude = h.Longitude,
+                Latitude = h.Latitude,
+                Rooms = h.Rooms,
+                MaxPrice = h.Rooms.Max(r => r.Price),
+                MinPrice = h.Rooms.Min(r => r.Price),
+            })
+            .FirstOrDefaultAsync();
     }
     
 }
