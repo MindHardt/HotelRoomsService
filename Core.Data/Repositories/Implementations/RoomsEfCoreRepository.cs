@@ -31,6 +31,7 @@ public class RoomsEfCoreRepository :
 
     public async Task<Room?> UpdateRoom(Room room)
     {
+        // Репозиторий не содержит логики, только обновляет данные которые к нему пришли
         var entry = Set.Update(room);
         await CommitAsync();
 

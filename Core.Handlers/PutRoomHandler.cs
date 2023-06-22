@@ -25,14 +25,14 @@ public class PutRoomHandler : IRequestHandler<PutRoomRequest, PutRoomResponse>
         
         NotFoundException.ThrowIfNull(dbRoom);
 
-        var updatedRoom = dbRoom with
+        var updatedRoom = dbRoom with // record'ы умеют вот так
         {
             Class = request.Room.Class,
             Floor = request.Room.Floor,
             State = request.Room.State,
             ImageUrl = request.Room.ImageUrl,
             Price = request.Room.Price,
-        };
+        }; // Обновляем только те поля которые могут измениться (номер и отель не могут)
         
         await _roomsService.UpdateRoom(updatedRoom);
 
