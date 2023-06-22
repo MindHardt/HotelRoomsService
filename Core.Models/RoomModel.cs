@@ -10,4 +10,5 @@ public record RoomModel
     public required RoomCleanState State { get; set; }
     public required string ImageUrl { get; set; }
     public required int Floor { get; set; }
+    public required string[] Modifiers { get; set; }
 }

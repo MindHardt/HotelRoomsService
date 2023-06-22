@@ -27,4 +27,9 @@ public interface IRoomsRepository
     /// <param name="room">Sample for updating</param>
     /// <returns>Updated room or null if failed</returns>
     Task<Room?> UpdateRoom(Room room);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Task AddRoomModifiers();
 }

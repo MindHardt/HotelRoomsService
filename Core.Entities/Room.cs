@@ -1,4 +1,6 @@
-﻿namespace Core.Entities;
+﻿using System.Buffers.Text;
+
+namespace Core.Entities;
 
 public record Room
 {
@@ -14,6 +16,9 @@ public record Room
     public required decimal Price { get; set; }
     
     public required string ImageUrl { get; set; } 
+
     public required int Floor { get; set; }
 
+    //public required RoomRoomModifier[] Modifiers { get; set; }
+    public ICollection<RoomModifier> RoomModifiers { get; set; } = new List<RoomModifier>();
 }

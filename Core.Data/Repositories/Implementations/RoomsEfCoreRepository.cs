@@ -35,17 +35,40 @@ public class RoomsEfCoreRepository :
     public async Task<Room?> UpdateRoom(Room room)
     {
         // Репозиторий не содержит логики, только обновляет данные которые к нему пришли
-        EntityEntry<Room>? entry;
-        try
-        {
-            entry = Set.Update(room);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        var entry = Set.Update(room);
         await CommitAsync();
         return entry.Entity;
+    }
+
+    public async Task AddRoomModifiers()
+    {
+        var modifiers = new[]
+        {
+            new[]
+            {
+                new RoomModifier() { Id = 1, Name = "Двуспальная кровать" },
+                new RoomModifier() { Id = 2, Name = "Односпальная кровать" },
+            },
+            new[]
+            {
+                new RoomModifier() { Id = 3, Name = "Питание включено" },
+                new RoomModifier() { Id = 4, Name = "Питание не включено" },
+            },
+            new[]
+            {
+                new RoomModifier() { Id = 5, Name = "Сейф есть" },
+                new RoomModifier() { Id = 6, Name = "Сейфа нет" },
+            }
+        };
+        
+        var rooms = await Set.ToArrayAsync();
+        foreach (var room in rooms)
+        {
+            room.RoomModifiers.Add(modifiers[0][Random.Shared.Next(2)]);
+            room.RoomModifiers.Add(modifiers[1][Random.Shared.Next(2)]);
+            room.RoomModifiers.Add(modifiers[2][Random.Shared.Next(2)]);
+        }
+
+        await CommitAsync();
     }
 }

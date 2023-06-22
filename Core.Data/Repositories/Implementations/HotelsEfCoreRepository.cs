@@ -29,6 +29,7 @@ public class HotelsEfCoreRepository:
     {
         return await Set
             .Include(h => h.Rooms)
+            .ThenInclude(r => r.RoomModifiers)
             .Where(h => h.Latitude == lat && h.Longitude == lon)
             .Select(h => new HotelData
             {
