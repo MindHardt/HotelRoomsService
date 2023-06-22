@@ -1,4 +1,4 @@
-﻿namespace Core.Responses;
+namespace Core.Responses;
 
 public class PutRoomResponse
 {
