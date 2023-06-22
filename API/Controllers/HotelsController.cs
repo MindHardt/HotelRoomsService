@@ -29,4 +29,8 @@ public class HotelsController : ControllerBase
     [HttpPut]
     public Task<PutRoomResponse> UpdateRoom([FromBody] PutRoomRequest request)
     => _mediator.Send(request);
+    
+    [HttpPost]
+    public Task<PostOrderResponse> MakeRoomClear([FromBody] PostOrderRequest request)
+        => _mediator.Send(request);
 }

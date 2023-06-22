@@ -36,8 +36,6 @@ public class PutRoomHandler : IRequestHandler<PutRoomRequest, PutRoomResponse>
         
         await _roomsService.UpdateRoom(updatedRoom);
 
-        //todo: отправить ченить клинингу
-
         var response = new PutRoomResponse();
 
         return response;

@@ -49,6 +49,7 @@ public class Startup
             });
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        services.AddHttpClient();
     }
 
     public void Configure(IApplicationBuilder app)
