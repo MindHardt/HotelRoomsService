@@ -1,4 +1,6 @@
-﻿namespace Core.Responses;
+﻿using Core.Entities;
+
+namespace Core.Responses;
 
 public class PutOrderResponse
 {

@@ -27,15 +27,18 @@ public class PutOrderHandler : IRequestHandler<PutOrderRequest, PutOrderResponse
     {
         var dbRoom =
             await _roomsService.GetByCoordinates(request.HotelLatitude, request.HotelLongitude, request.RoomNumber);
-        
+
         NotFoundException.ThrowIfNull(dbRoom);
+
         var updateRoom = dbRoom with
         {
-            State = RoomCleanState.Clean
+            State = request.State
         };
-        await _roomsService.UpdateRoom(updateRoom);
         
-        //await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, request, cancellationToken: cancellationToken);
+        await _roomsService.UpdateRoom(updateRoom);
+
+        if (request.IsCleaningRequested is false)
+            await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, request, cancellationToken: cancellationToken);
         return new PutOrderResponse();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using Core.Entities;
 using Core.Requests;
 using Core.Responses;
 using MediatR;
@@ -26,11 +27,14 @@ public class HotelsController : ControllerBase
     public Task<GetHotelResponse> GetHotel([FromQuery] GetHotelRequest request)
         => _mediator.Send(request);
 
-    [HttpPut]
+    [HttpPut("room")]
     public Task<PutRoomResponse> UpdateRoom([FromBody] PutRoomRequest request)
     => _mediator.Send(request);
     
-    [HttpPut("room/clean")]
-    public Task<PutOrderResponse> MakeRoomClear([FromBody] PutOrderRequest request)
-        => _mediator.Send(request);
+    [HttpPut("room/{State}")]
+    public Task<PutOrderResponse> MakeRoomClear([FromBody, FromRoute] PutOrderRequest request, RoomCleanState State)
+    {
+        request.State = State;
+        return _mediator.Send(request);
+    }
 }
