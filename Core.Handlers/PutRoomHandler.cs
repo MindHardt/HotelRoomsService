@@ -30,7 +30,7 @@ public class PutRoomHandler : IRequestHandler<PutRoomRequest, PutRoomResponse>
             Class = request.Room.Class,
             Floor = request.Room.Floor,
             State = request.Room.State,
-            ImageUrl = request.Room.ImageUrl,
+            ImageUrls = request.Room.ImageUrls,
             Price = request.Room.Price,
         }; // Обновляем только те поля которые могут измениться (номер и отель не могут)
         
