@@ -11,17 +11,13 @@ public class RoomsEfCoreRepository :
     EfCoreRepositoryBase<Room>,
     IRoomsRepository
 {
-    private readonly DbContext _ctx;
-
     public RoomsEfCoreRepository(DbContext ctx) : base(ctx)
     {
-        _ctx = ctx;
     }
 
     public async Task<IReadOnlyCollection<Room>> GetAllRooms(float lat, float lon)
     {
         return await Set
-            .Include(r => r.Hotel)
             .Where(r => r.Hotel.Latitude == lat && r.Hotel.Longitude == lon)
             .ToArrayAsync();
     }
@@ -29,28 +25,15 @@ public class RoomsEfCoreRepository :
     public async Task<Room?> GetRoom(float lat, float lon, int number)
     {
         return await Set
-            .Include(r => r.Hotel)
             .Where(r => r.Hotel.Latitude == lat && r.Hotel.Longitude == lon)
             .FirstOrDefaultAsync(r => r.Number == number);
     }
 
     public async Task<Room?> UpdateRoom(Room room)
     {
-        return await Task.Run(() => {
-            var dbRoom = Set.Find(room.Number);
+        var entry = Set.Update(room);
+        await CommitAsync();
 
-            if (dbRoom is null)
-                return null;
-
-            dbRoom.State = room.State;
-            dbRoom.Price = room.Price;
-            dbRoom.Class = room.Class;
-            dbRoom.Floor = room.Floor;
-            dbRoom.ImageUrl = room.ImageUrl;
-
-            _ctx.SaveChanges();
-
-            return dbRoom;
-        });
+        return entry.Entity;
     }
 }

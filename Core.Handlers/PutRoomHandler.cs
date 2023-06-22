@@ -12,19 +12,29 @@ namespace Core.Handlers;
 public class PutRoomHandler : IRequestHandler<PutRoomRequest, PutRoomResponse>
 {
     private readonly IRoomsService _roomsService;
-    private readonly IMapper _mapper;
 
-    public PutRoomHandler(IRoomsService roomsService, IMapper mapper)
+    public PutRoomHandler(IRoomsService roomsService)
     {
         _roomsService = roomsService;
-        _mapper = mapper;
     }
 
     public async Task<PutRoomResponse> Handle(PutRoomRequest request, CancellationToken cancellationToken)
     {
-        var updatedRoom = await _roomsService.UpdateRoom(_mapper.Map<Room>(request.Room));
+        var dbRoom =
+            await _roomsService.GetByCoordinates(request.HotelLatitude, request.HotelLongitude, request.Room.Number);
+        
+        NotFoundException.ThrowIfNull(dbRoom);
 
-        NotFoundException.ThrowIfNull(updatedRoom);
+        var updatedRoom = dbRoom with
+        {
+            Class = request.Room.Class,
+            Floor = request.Room.Floor,
+            State = request.Room.State,
+            ImageUrl = request.Room.ImageUrl,
+            Price = request.Room.Price,
+        };
+        
+        await _roomsService.UpdateRoom(updatedRoom);
 
         //todo: отправить ченить клинингу
 
