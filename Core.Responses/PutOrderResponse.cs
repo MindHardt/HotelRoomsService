@@ -4,5 +4,5 @@ namespace Core.Responses;
 
 public class PutOrderResponse
 {
-    // При необходимости осмысленного ответа от сервиса клининга 
+    public required RoomCleanState CleaningState { get; set; }
 }

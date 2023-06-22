@@ -22,7 +22,6 @@ public class PutOrderHandler : IRequestHandler<PutOrderRequest, PutOrderResponse
         _cleaningServiceUrl = configuration.GetSection("Urls")["CleaningService"]!;
     }
     
-    
     public async Task<PutOrderResponse> Handle(PutOrderRequest request, CancellationToken cancellationToken)
     {
         var dbRoom =
@@ -30,15 +29,27 @@ public class PutOrderHandler : IRequestHandler<PutOrderRequest, PutOrderResponse
 
         NotFoundException.ThrowIfNull(dbRoom);
 
+        RoomCleanState state = RoomCleanState.CleanRequested;
+        if (request.IsCleaningRequested is false)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, request, cancellationToken: cancellationToken);
+                state = response.IsSuccessStatusCode ? RoomCleanState.CleanRequested : RoomCleanState.Dirty;
+            }
+            catch (Exception e)
+            {
+                state = RoomCleanState.Dirty;
+            }
+        }
+        
         var updateRoom = dbRoom with
         {
-            State = request.State
+            State = state
         };
         
         await _roomsService.UpdateRoom(updateRoom);
-
-        if (request.IsCleaningRequested is false)
-            await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, request, cancellationToken: cancellationToken);
-        return new PutOrderResponse();
+        
+        return new PutOrderResponse() {CleaningState = updateRoom.State };
     }
 }
