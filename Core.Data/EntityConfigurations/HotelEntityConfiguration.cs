@@ -16,7 +16,7 @@ public class HotelEntityConfiguration : IEntityTypeConfiguration<Hotel>
 
         builder.HasIndex(x => new { x.Latitude, x.Longitude})
             .IsUnique();
-        
+
         // Данные по умолчанию для тестов
         var radisson = new Hotel
         {

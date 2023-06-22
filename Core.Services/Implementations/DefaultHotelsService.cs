@@ -15,12 +15,12 @@ public class DefaultHotelsService : IHotelsService
         _hotelsRepository = hotelsRepository;
     }
 
-    public Task<IReadOnlyCollection<Hotel>> GetAllHotelsAsync()
+    public Task<IReadOnlyCollection<HotelData>> GetAllHotelsAsync()
     {
         return _hotelsRepository.GetAllHotels();
     }
 
-    public async Task<Hotel?> GetByCoordinates(float latitude, float longitude)
+    public async Task<HotelData?> GetByCoordinates(float latitude, float longitude)
     {
         return await _hotelsRepository.GetHotel(latitude, longitude);
     }

@@ -24,7 +24,7 @@ public class GetAllHotelsHandler : IRequestHandler<GetAllHotelsRequest, GetAllHo
     {
         var hotels = await _hotelsService.GetAllHotelsAsync();
 
-        var response = new GetAllHotelsResponse()
+        var response = new GetAllHotelsResponse
         {
             Hotels = hotels
                 .Select(_mapper.Map<HotelModel>)

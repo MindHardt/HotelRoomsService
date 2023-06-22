@@ -39,6 +39,7 @@ public class Startup
             options.AddMaps(typeof(HotelsMapper));
         });
         services.AddErrorHandling();
+        services.AddHttpClient();
 
         services.AddControllers()
             .AddJsonOptions(options =>

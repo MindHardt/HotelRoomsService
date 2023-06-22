@@ -4,7 +4,7 @@ namespace Core.Services.Core;
 
 public interface IHotelsService
 {
-    public Task<IReadOnlyCollection<Hotel>> GetAllHotelsAsync();
-    public Task<Hotel?> GetByCoordinates(float latitude, float longitude);
+    public Task<IReadOnlyCollection<HotelData>> GetAllHotelsAsync();
+    public Task<HotelData?> GetByCoordinates(float latitude, float longitude);
 
 }
