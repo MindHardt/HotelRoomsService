@@ -29,8 +29,8 @@ public class PutOrderHandler : IRequestHandler<PutOrderRequest, PutOrderResponse
 
         NotFoundException.ThrowIfNull(dbRoom);
 
-        RoomCleanState state = RoomCleanState.CleanRequested;
-        if (request.IsCleaningRequested is false)
+        RoomCleanState state = request.State;
+        if (request.IsCleaningRequested is false || state is RoomCleanState.Clean)
         {
             try
             {
