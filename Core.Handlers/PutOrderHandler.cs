@@ -34,7 +34,13 @@ public class PutOrderHandler : IRequestHandler<PutOrderRequest, PutOrderResponse
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, request, cancellationToken: cancellationToken);
+                var cleaningRequest = new
+                {
+                    latitude = request.HotelLatitude,
+                    longitude = request.HotelLongitude,
+                    room_number = request.RoomNumber
+                };
+                var response = await _httpClient.PostAsJsonAsync(_cleaningServiceUrl, cleaningRequest, cancellationToken: cancellationToken);
                 state = response.IsSuccessStatusCode ? RoomCleanState.CleanRequested : RoomCleanState.Dirty;
             }
             catch (Exception e)
